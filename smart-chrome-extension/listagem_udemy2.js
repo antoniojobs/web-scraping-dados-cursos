@@ -15,7 +15,6 @@ let minuto_full = listaConteudo.map((item,index)=>{
     return(item.replace(reg_1,(match, p1,p2, offset, string)=>{
         p1 = p1.replace('m','')
         p1 = parseInt(p1)<10?'00:0'+p1 : '00:'+p1;
-        console.log(`${p1}`);        
         return `• ${p1}`
     }));
 })
@@ -25,7 +24,6 @@ let hora_full = minuto_full.map((item,index)=>{
     return(item.replace(reg_2,(match, p1,p2, offset, string)=>{
         p1 = p1.replace('h','')
         p1 = parseInt(p1)<10?'0'+p1: p1;
-        console.log(`${p1}:00`);
         return `${p1}:00`
     }));
 })
@@ -46,25 +44,40 @@ let arrConstruidoFinal = []
 
 let reg_5 = /([0-9]+\s[a-z]+\s\•\s)([0-9]+[:][0-9]+)/
 arrConstruido = hora_minuto_full.map((item)=>{
-    console.log(item.replace(reg_5,(match, p1, p2, offset, string)=>`${p2}|`));
+    // console.log(item.replace(reg_5,(match, p1, p2, offset, string)=>`${p2}|`));
     return item.replace(reg_5,(match, p1, p2, offset, string)=>`${p2}`)
 })
 let titulos = []
 let tempo = []
 let juntos = []
-console.log(arrConstruido.map((item,index)=>{
+arrConstruido.map((item,index)=>{
     if (index%2==0) {
         titulos.push(item)
     } else {
         tempo.push(item)
     }
-}));
+});
+
 tempo.forEach((element, index, array)=>{
-    console.log(`${array[index]} | ${titulos[index]}`);
+    // console.log(`${array[index]} | ${titulos[index]}`);
     juntos.push(`${array[index]} | ${titulos[index]}`)
 });
-console.log(juntos);
+// console.log(juntos);
+
+//!estrutura para inserir dados na view do plugin
+
+// let listaLI = document.createElement('li')
+let lista = document.querySelectorAll('#list-data')
+
+function criaItem(data=juntos,target = lista,HTMLel = 'li') {
+    let listaLI = document.createElement('li')
+    let createdElement = document.createElement(`${HTMLel}`)
+    data.map((item)=>{
+        console.log(item);
+        createdElement.innerText = `brasilll`
+    })
+}
+criaItem()
 
 // $x('//*[@id="br"]/div[1]/div[3]/div/div/div[1]/div[4]/div[2]/div[2]/div/div[2]')[0].innerText.split('\n')
 // $x('//*[@id="br"]/div[1]/div[3]/div/div/div[1]/div[4]/div[2]/div[2]/div')[0].innerText.split('\n')
-// (24) ['Conteúdo do curso', '13 seções • 146 aulas • Duração total: 19h 56m', 'Expandir todas as seções', 'Introdução', '2 aulas • 5m', 'Instalação e Configuração das ferramentas Java', '4 aulas • 14m', 'GIT e GITHUB básico (Opcional)', '1 aulas • 18m', 'Introdução ao Spring Boot', '9 aulas • 1h 24m', 'Desenvolvimento da API de Clientes', '18 aulas • 2h 10m', 'Módulo de Introdução ao Angular', '11 aulas • 1h 39m', 'Projeto Front-end - Criação do Template da Aplicação', '8 aulas • 39m', 'Cadastro e Listagem de Clientes', '23 aulas • 3h 3m', 'Módulo de Cadastro de Serviços Prestados', '14 aulas • 2h 10m', 'Autenticação e Segurança da Aplicação com OAuth2 e JWT', '25 aulas • 4h 1m', 'mais 3 seções']
